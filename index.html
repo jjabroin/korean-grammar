@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>국어 문법 완전 끝내기 - 조사</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEE7D6; --paper2:#E7DEC9; --ink:#2A2521; --ink2:#6B6155;
+  --indigo:#1F3A5F; --seal:#B93A2E; --jade:#2F7A6B;
+  --line:rgba(42,37,33,.28); --seal-ink:#F6EEDC;
+  --font:"Noto Serif KR","Nanum Myeongjo","Batang",serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#181C28; --paper2:#212638; --ink:#EDE5D0; --ink2:#A59D8B;
+  --indigo:#8FB0DA; --seal:#D9503F; --jade:#6FC0AD; --line:rgba(237,229,208,.28); --seal-ink:#FFF3DE;
+}}
+:root[data-theme="dark"]{--paper:#181C28;--paper2:#212638;--ink:#EDE5D0;--ink2:#A59D8B;--indigo:#8FB0DA;--seal:#D9503F;--jade:#6FC0AD;--line:rgba(237,229,208,.28);--seal-ink:#FFF3DE}
+html{height:100%} *,*::before,*::after{box-sizing:border-box} [hidden]{display:none!important}
+body{margin:0;min-height:100%;font-family:var(--font);color:var(--ink);background:var(--paper);line-height:1.6}
+.wrap{max-width:560px;margin:0 auto;padding:8px 20px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+.band{height:10px;background:repeating-linear-gradient(90deg,#2F5D8A 0 22px,#B93A2E 22px 44px,#D2A93F 44px 66px,#EDE6D6 66px 88px,#24211F 88px 110px);border-bottom:2px solid var(--ink)}
+.tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line);margin:16px 0 22px}
+.tabs button{flex:1;min-width:25%;min-height:50px;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;font-size:13px;font-weight:600;color:var(--ink2);padding:6px 2px}
+.tabs button[aria-selected="true"]{color:var(--indigo);font-weight:900;border-bottom-color:var(--seal)}
+.hero{display:flex;gap:18px;align-items:flex-start;margin:4px 0 18px}
+.seal{flex:none;width:70px;padding:8px 0;background:var(--seal);color:var(--seal-ink);text-align:center;font-weight:900;font-size:26px;border-radius:4px;transform:rotate(-2deg)}
+.hero h1{margin:2px 0 0;font-size:22px;font-weight:900;color:var(--indigo);line-height:1.3}
+.lead{margin:0 0 20px;color:var(--ink2);font-size:14.5px}
+.btn{display:inline-block;min-height:50px;padding:10px 26px;font-size:17px;font-weight:600;background:var(--indigo);color:var(--paper);border:0;border-radius:2px}
+.btn.ghost{background:transparent;color:var(--indigo);border:1px solid var(--indigo)}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.count{font-size:14px;color:var(--ink2);white-space:nowrap}
+.track{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.fill{height:100%;background:var(--seal)}
+.q{text-align:center;padding:22px 16px;margin-bottom:16px;border:1px solid var(--line);background:var(--paper2)}
+.q .ask{margin:0;font-size:15px;color:var(--ink2)}
+.q .stem{margin:8px 0 0;font-size:32px;font-weight:900;color:var(--indigo);letter-spacing:.02em}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;min-height:46px;padding:6px 4px;text-align:center;background:var(--paper);border:1.5px solid var(--ink)}
+.opt .no{font-size:14px;color:var(--ink2);width:auto;flex:none}
+.opt .t{font-size:14px;font-weight:600}
+.opt .tag{margin-left:0;font-size:10.5px;font-weight:600}
+.opts.locked .opt{cursor:default}
+.opts:not(.locked) .opt.sel{background:var(--indigo);border-color:var(--indigo);color:var(--paper)}
+.opts:not(.locked) .opt.sel .no{color:var(--paper)}
+.opts:not(.locked) .opt.sel .t::before{content:'✓ '}
+.opt{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.opt.right{border-color:var(--jade);background:var(--paper2)}
+.opt.right .tag{color:var(--jade)}
+.opt.bad{border-color:var(--seal)}
+.opt.bad .tag{color:var(--seal)}
+.opt.miss{border-color:var(--seal);border-style:dashed}
+.opt.miss .tag{color:var(--seal)}
+.opts.locked .opt:not(.right):not(.bad):not(.miss){opacity:.45}
+.fb{min-height:56px;margin:16px 0 0;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fb p{margin:0;font-size:16px;font-weight:600}
+.fb .ok{color:var(--jade)} .fb .no{color:var(--seal)}
+.score{display:flex;gap:20px;align-items:center;margin:14px 0 24px}
+.score .seal{width:auto;min-width:90px;padding:12px 10px;font-size:30px}
+.score h2{margin:0;font-size:20px;color:var(--indigo)}
+.score p{margin:4px 0 0;color:var(--ink2)}
+.tinput{width:100%;min-height:54px;padding:10px 16px;font-size:18px;font-family:var(--font);background:var(--paper);border:1.5px solid var(--ink);color:var(--ink);margin-bottom:6px}
+.tinput:disabled{opacity:.7}
+.sets{display:flex;margin:14px 0 6px;border:1.5px solid var(--ink)}
+.sets button{flex:1;min-height:44px;background:transparent;border:0;font-size:15px;font-weight:600;color:var(--ink2)}
+.sets button+button{border-left:1.5px solid var(--ink)}
+.sets button[aria-pressed="true"]{background:var(--indigo);color:var(--paper);font-weight:900}
+</style>
+</head>
+<body>
+<div class="band"></div>
+<div class="wrap" id="view"></div>
+<script>
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const view = document.getElementById('view');
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; };
+const LETTERS = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨'];
+
+const TYPES_J = [
+  {id:'주격',name:'주격 조사'},{id:'서술격',name:'서술격 조사'},{id:'목적격',name:'목적격 조사'},
+  {id:'보격',name:'보격 조사'},{id:'관형격',name:'관형격 조사'},{id:'부사격',name:'부사격 조사'},
+  {id:'호격',name:'호격 조사'},{id:'접속',name:'접속 조사'},{id:'보조사',name:'보조사'}
+];
+const RAW_J = {
+  주격:['이','가','께서','에서'], 서술격:['이다'], 목적격:['을','를'], 보격:['이','가'],
+  관형격:['의'], 부사격:['에','에서','에게','(으)로','와','과','처럼','보다'],
+  호격:['아','야','(이)여'], 접속:['와','과','하고','(이)랑'],
+  보조사:['은','는','만','뿐','도','부터','까지','마저','마다','(이)야(말로)','밖에','요']
+};
+const E=(id,name,...alt)=>({id,name,alt});
+const RAW_E = {
+  높임선어말:['-시-'], 시제선어말:['-았/었-','-ㄴ/는-','-겠-'],
+  평서형:['-다','-네','-오','-ㅂ니다'], 의문형:['-니','-나','-ㅂ니까'],
+  명령형:['-아라','-어라','-하십시오'], 청유형:['-자','-세'], 감탄형:['-구나','-군','-로구나'],
+  대등적:['-고','-며','-면서','-거나'], 종속적:['-면','-니','-려고','-러'], 보조적:['-아','-어','-게','-지','-고'],
+  명사형:['-기','-ㅁ'], 관형사형:['-는','-ㄴ','-ㄹ','-던'], 부사형:['-게','-도록']
+};
+const SETS = {
+  josa:{label:'조사',noun:'조사',seal:'助',title:'국어 문법<br>완전 끝내기 - 조사',eg:'예: 주격, 보조사',kindEg:'보조사',
+    overlap:'이/가, 와/과, 에서 등',types:TYPES_J,raw:RAW_J},
+  eomi:{label:'어미',noun:'어미',seal:'尾',title:'국어 문법<br>완전 끝내기 - 어미',eg:'예: 평서형 종결 어미, 대등적 연결 어미',kindEg:'평서형 종결 어미',
+    overlap:'-고, -게, -니 등',raw:RAW_E,types:[
+    E('높임선어말','높임의 선어말 어미','높임','높임선어말어미'),E('시제선어말','시제의 선어말 어미','시제','시제선어말어미'),
+    E('평서형','평서형 종결 어미','평서','평서형어미'),E('의문형','의문형 종결 어미','의문','의문형어미'),
+    E('명령형','명령형 종결 어미','명령','명령형어미'),E('청유형','청유형 종결 어미','청유','청유형어미'),
+    E('감탄형','감탄형 종결 어미','감탄','감탄형어미'),E('대등적','대등적 연결 어미','대등','대등적어미'),
+    E('종속적','종속적 연결 어미','종속','종속적어미'),E('보조적','보조적 연결 어미','보조','보조적어미'),
+    E('명사형','명사형 전성 어미','명사','명사형어미'),E('관형사형','관형사형 전성 어미','관형사','관형사형어미'),
+    E('부사형','부사형 전성 어미','부사','부사형어미')]}
+};
+let SETID='josa', SET, TYPES, WORDS;
+function useSet(id){
+  SETID=id; SET=SETS[id]; TYPES=SET.types;
+  const map={};
+  Object.entries(SET.raw).forEach(([cat,ws]) => ws.forEach(w => { (map[w] ||= []).push(cat); }));
+  WORDS=Object.entries(map).map(([w,cats]) => ({w,cats}));
+  document.title='국어 문법 완전 끝내기 - '+SET.noun;
+}
+useSet('josa');
+const typeName = id => TYPES.find(t=>t.id===id).name;
+function optsA(word){
+  if (TYPES.length<=9) return TYPES;
+  const need=TYPES.filter(t=>word.cats.includes(t.id));
+  const keep=new Set([...need,...shuffle(TYPES.filter(t=>!word.cats.includes(t.id))).slice(0,9-need.length)]);
+  return TYPES.filter(t=>keep.has(t));
+}
+const TOTAL_Q = 8;
+let TAB = 'A';
+let SES = null;
+
+function progress(i,total){
+  const pct = Math.round(i/total*100);
+  return `<div class="top"><span class="count">${i+1} / ${total}</span><div class="track"><div class="fill" style="width:${pct}%"></div></div></div>`;
+}
+function scoreScreen(sc,total,onAgain){
+  const pct = sc/total;
+  const msg = pct===1?'만점입니다. 완전히 익혔어요.':pct>=.8?'거의 다 왔어요. 틀린 것만 다시 짚어 보세요.':pct>=.5?'절반은 넘었어요. 한 번 더 풀면 확실해집니다.':'아직 헷갈리는 게 많아요. 다시 풀어 보세요.';
+  view.innerHTML = `<section><div class="score"><div class="seal" aria-hidden="true">${sc}/${total}</div><div><h2>${msg}</h2><p>${total}문제 중 ${sc}문제를 맞혔어요.</p></div></div>
+    <div class="btn-row"><button class="btn" id="again">다시 풀기 (새 문제)</button><button class="btn ghost" id="home">처음 화면</button></div></section>`;
+  document.getElementById('again').onclick = onAgain;
+  document.getElementById('home').onclick = renderStart;
+}
+
+/* ===== Tabs meta ===== */
+const TABS = [
+  {id:'A', label:()=>`무슨 ${SET.noun}?`, desc:()=>`예시 ${SET.noun} 하나를 보고, 해당하는 유형을 선지 9개 중에서 모두 고릅니다. 두 유형에 겹치는 ${SET.noun}(${SET.overlap})는 둘 다 골라야 정답입니다. 준비된 ${SET.noun} 예시 전부가 문제로 나옵니다.`, count: () => WORDS.length},
+  {id:'B', label:()=>'예시 고르기', desc:()=>`${SET.noun} 종류(예: ${SET.kindEg})를 주면, 9개 선지 중 그 종류의 예시를 모두 고릅니다. ${TYPES.length}개 유형이 한 번씩 모두 문제로 나옵니다.`, count: () => TYPES.length},
+  {id:'C', label:()=>`같은 ${SET.noun}`, desc:()=>`예시 ${SET.noun} 하나를 보고, 같은(또는 다른) 종류인 것을 9개 선지 중 모두 고릅니다. 준비된 ${SET.noun} 예시 전부가 문제로 나옵니다.`, count: () => WORDS.length},
+  {id:'D', label:()=>'직접 적기', desc:()=>`예시 ${SET.noun} 하나를 보고, 무슨 ${SET.noun}인지 직접 입력합니다. 준비된 ${SET.noun} 예시 전부가 문제로 나옵니다.`, count: () => WORDS.length}
+];
+
+function renderStart(){
+  const meta = TABS.find(t=>t.id===TAB);
+  view.innerHTML = `
+    <div class="sets" role="group" aria-label="영역">${Object.entries(SETS).map(([k,v])=>`<button aria-pressed="${SETID===k}" data-s="${k}">${v.label}</button>`).join('')}</div>
+    <div class="hero"><div class="seal">${SET.seal}</div><h1>${SET.title}</h1></div>
+    <div class="tabs" role="tablist">${TABS.map(t=>`<button role="tab" aria-selected="${TAB===t.id}" data-t="${t.id}">${t.label()}</button>`).join('')}</div>
+    <p class="lead">${meta.desc()}</p>
+    <button class="btn" id="start">퀴즈 시작 (${meta.count()}문제)</button>`;
+  document.querySelectorAll('.sets button').forEach(b => b.onclick = () => { useSet(b.dataset.s); renderStart(); });
+  document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => { TAB = b.dataset.t; renderStart(); });
+  document.getElementById('start').onclick = () => {
+    if (TAB==='A') startA(); else if (TAB==='B') startB(); else if (TAB==='C') startC(); else startD();
+  };
+}
+
+/* ===== A: 예시 -> 종류 (단일 선택) ===== */
+function startA(){
+  const qs = shuffle(WORDS).map(word => ({ word, opts: optsA(word), selected:new Set(), locked:false, ok:null }));
+  SES = { qs, i:0, score:0 };
+  renderA();
+}
+function renderA(){
+  const q = SES.qs[SES.i], total = SES.qs.length;
+  view.innerHTML = `<section>${progress(SES.i,total)}
+    <div class="q"><p class="ask">다음은 무슨 ${SET.noun}입니까? 해당하는 것을 모두 고르시오</p><p class="stem">${esc(q.word.w)}</p></div>
+    <div class="opts ${q.locked?'locked':''}" id="opts">
+      ${q.opts.map((o,k) => {
+        const sel = q.selected.has(k), isC = q.word.cats.includes(o.id);
+        let cls = sel?'sel':'', tag='';
+        if (q.locked){ if(isC&&sel){cls='right';tag='정답';} else if(isC&&!sel){cls='miss';tag='놓침';} else if(!isC&&sel){cls='bad';tag='오답';} else cls=''; }
+        return `<button class="opt ${cls}" data-k="${k}" ${q.locked?'disabled':''}><span class="no">${LETTERS[k]}</span><span class="t">${esc(o.name)}</span><span class="tag">${tag}</span></button>`;
+      }).join('')}
+    </div>
+    <div class="btn-row">${q.locked?'':'<button class="btn" id="submit">확인</button>'}</div>
+    <div class="fb" id="fb"></div></section>`;
+  if (!q.locked){
+    document.querySelectorAll('.opt').forEach(b => b.onclick = () => { const k=+b.dataset.k; q.selected.has(k)?q.selected.delete(k):q.selected.add(k); renderA(); });
+    document.getElementById('submit').onclick = () => {
+      q.locked = true;
+      const correctSet = new Set(q.opts.map((o,k)=> q.word.cats.includes(o.id)?k:-1).filter(k=>k>=0));
+      q.ok = q.selected.size===correctSet.size && [...correctSet].every(k=>q.selected.has(k));
+      if (q.ok) SES.score++;
+      renderA();
+    };
+  } else {
+    const last = SES.i===total-1;
+    document.getElementById('fb').innerHTML = `<p class="${q.ok?'ok':'no'}">${q.ok?'정답입니다.':'오답입니다. 정답은 '+esc(q.word.cats.map(typeName).join(' / '))+'.'}</p><button class="btn" id="nx">${last?'결과 보기':'다음 문제'}</button>`;
+    document.getElementById('nx').onclick = () => { SES.i++; last ? scoreScreen(SES.score,total,startA) : renderA(); };
+  }
+}
+
+/* ===== B: 종류 -> 예시 모두 고르기 ===== */
+function startB(){
+  const qs = shuffle(TYPES).map(t => {
+    const cat = t.id;
+    const correct = WORDS.filter(w => w.cats.includes(cat));
+    const wrong = WORDS.filter(w => !w.cats.includes(cat));
+    const nC = Math.min(3, correct.length);
+    const opts = shuffle([...shuffle(correct).slice(0,nC), ...shuffle(wrong).slice(0,9-nC)]);
+    return { cat, opts, selected:new Set(), locked:false, ok:null };
+  });
+  SES = { qs, i:0, score:0 };
+  renderB();
+}
+function renderB(){
+  const q = SES.qs[SES.i], total = SES.qs.length;
+  view.innerHTML = `<section>${progress(SES.i,total)}
+    <div class="q"><p class="ask">다음 중 ${esc(typeName(q.cat))}의 예시를 모두 고르시오</p></div>
+    <div class="opts ${q.locked?'locked':''}" id="opts">
+      ${q.opts.map((o,k) => {
+        const sel = q.selected.has(k), isC = o.cats.includes(q.cat);
+        let cls = sel?'sel':'', tag='';
+        if (q.locked){ if(isC&&sel){cls='right';tag='정답';} else if(isC&&!sel){cls='miss';tag='놓침';} else if(!isC&&sel){cls='bad';tag='오답';} else cls=''; }
+        return `<button class="opt ${cls}" data-k="${k}" ${q.locked?'disabled':''}><span class="no">${LETTERS[k]}</span><span class="t">${esc(o.w)}</span><span class="tag">${tag}</span></button>`;
+      }).join('')}
+    </div>
+    <div class="btn-row">${q.locked?'':'<button class="btn" id="submit">확인</button>'}</div>
+    <div class="fb" id="fb"></div></section>`;
+  if (!q.locked){
+    document.querySelectorAll('.opt').forEach(b => b.onclick = () => { const k=+b.dataset.k; q.selected.has(k)?q.selected.delete(k):q.selected.add(k); renderB(); });
+    document.getElementById('submit').onclick = () => {
+      q.locked = true;
+      const correctSet = new Set(q.opts.map((o,k)=> o.cats.includes(q.cat)?k:-1).filter(k=>k>=0));
+      q.ok = q.selected.size===correctSet.size && [...correctSet].every(k=>q.selected.has(k));
+      if (q.ok) SES.score++;
+      renderB();
+    };
+  } else {
+    const last = SES.i===total-1;
+    document.getElementById('fb').innerHTML = `<p class="${q.ok?'ok':'no'}">${q.ok?'정답입니다.':'오답입니다.'}</p><button class="btn" id="nx">${last?'결과 보기':'다음 문제'}</button>`;
+    document.getElementById('nx').onclick = () => { SES.i++; last ? scoreScreen(SES.score,total,startB) : renderB(); };
+  }
+}
+
+/* ===== C: 예시 -> 같은/다른 종류 모두 고르기 ===== */
+function startC(){
+  const qs = shuffle(WORDS).map(target => {
+    const askSame = Math.random()<0.5;
+    const rest = shuffle(WORDS.filter(w => w.w!==target.w)).slice(0,9);
+    return { target, askSame, opts:rest, selected:new Set(), locked:false, ok:null };
+  });
+  SES = { qs, i:0, score:0 };
+  renderC();
+}
+function isMatchC(target,o){ return o.cats.some(c=>target.cats.includes(c)); }
+function renderC(){
+  const q = SES.qs[SES.i], total = SES.qs.length;
+  const ask = q.askSame ? `다음 ${SET.noun}와 같은 종류인 것을 모두 고르시오` : `다음 ${SET.noun}와 다른 종류인 것을 모두 고르시오`;
+  view.innerHTML = `<section>${progress(SES.i,total)}
+    <div class="q"><p class="ask">${ask}</p><p class="stem">${esc(q.target.w)}</p></div>
+    <div class="opts ${q.locked?'locked':''}" id="opts">
+      ${q.opts.map((o,k) => {
+        const sel = q.selected.has(k);
+        const isC = q.askSame ? isMatchC(q.target,o) : !isMatchC(q.target,o);
+        let cls = sel?'sel':'', tag='';
+        if (q.locked){
+          const catNames = o.cats.map(typeName).join('/');
+          if(isC&&sel){cls='right';tag='정답 · '+catNames;}
+          else if(isC&&!sel){cls='miss';tag='정답(놓침) · '+catNames;}
+          else if(!isC&&sel){cls='bad';tag='오답 · '+catNames;}
+          else {cls='';tag=catNames;}
+        }
+        return `<button class="opt ${cls}" data-k="${k}" ${q.locked?'disabled':''}><span class="no">${LETTERS[k]}</span><span class="t">${esc(o.w)}</span><span class="tag">${tag}</span></button>`;
+      }).join('')}
+    </div>
+    <div class="btn-row">${q.locked?'':'<button class="btn" id="submit">확인</button>'}</div>
+    <div class="fb" id="fb"></div></section>`;
+  if (!q.locked){
+    document.querySelectorAll('.opt').forEach(b => b.onclick = () => { const k=+b.dataset.k; q.selected.has(k)?q.selected.delete(k):q.selected.add(k); renderC(); });
+    document.getElementById('submit').onclick = () => {
+      q.locked = true;
+      const correctSet = new Set(q.opts.map((o,k)=> (q.askSame?isMatchC(q.target,o):!isMatchC(q.target,o))?k:-1).filter(k=>k>=0));
+      q.ok = q.selected.size===correctSet.size && [...correctSet].every(k=>q.selected.has(k));
+      if (q.ok) SES.score++;
+      renderC();
+    };
+  } else {
+    const last = SES.i===total-1;
+    document.getElementById('fb').innerHTML = `<p class="${q.ok?'ok':'no'}">${q.ok?'정답입니다.':'오답입니다.'} (‘${esc(q.target.w)}’는 ${esc(q.target.cats.map(typeName).join(' / '))})</p><button class="btn" id="nx">${last?'결과 보기':'다음 문제'}</button>`;
+    document.getElementById('nx').onclick = () => { SES.i++; last ? scoreScreen(SES.score,total,startC) : renderC(); };
+  }
+}
+
+/* ===== D: 예시 -> 직접 입력 ===== */
+function startD(){
+  const qs = shuffle(WORDS).map(word => ({ word, val:'', locked:false, ok:null }));
+  SES = { qs, i:0, score:0 };
+  renderD();
+}
+function checkD(q){
+  const n = q.val.trim().replace(/\s+/g,'');
+  return q.word.cats.some(c => {
+    const t = TYPES.find(x=>x.id===c);
+    const short = t.name.replace(/\s(조사|어미)$/,'').replace(/\s+/g,'');
+    return [t.id, t.name.replace(/\s+/g,''), short, ...(t.alt||[])].includes(n);
+  });
+}
+function renderD(){
+  const q = SES.qs[SES.i], total = SES.qs.length;
+  view.innerHTML = `<section>${progress(SES.i,total)}
+    <div class="q"><p class="ask">다음은 무슨 ${SET.noun}입니까? (${SET.eg})</p><p class="stem">${esc(q.word.w)}</p></div>
+    <input class="tinput" id="ans" placeholder="답을 입력하세요" ${q.locked?'disabled':''} value="${esc(q.val)}">
+    <div class="btn-row">${q.locked?'':'<button class="btn" id="submit">확인</button>'}</div>
+    <div class="fb" id="fb"></div></section>`;
+  if (!q.locked){
+    const inp = document.getElementById('ans');
+    inp.focus();
+    inp.oninput = () => { q.val = inp.value; };
+    inp.onkeydown = e => { if (e.key==='Enter') doSubmitD(q); };
+    document.getElementById('submit').onclick = () => doSubmitD(q);
+  } else {
+    const last = SES.i===total-1;
+    document.getElementById('fb').innerHTML = `<p class="${q.ok?'ok':'no'}">${q.ok?'정답입니다.':'오답입니다. 정답은 '+esc(q.word.cats.map(typeName).join(' / '))+'.'}</p><button class="btn" id="nx">${last?'결과 보기':'다음 문제'}</button>`;
+    document.getElementById('nx').onclick = () => { SES.i++; last ? scoreScreen(SES.score,total,startD) : renderD(); };
+  }
+}
+function doSubmitD(q){
+  q.locked = true; q.ok = checkD(q);
+  if (q.ok) SES.score++;
+  renderD();
+}
+
+renderStart();
+</script>
+</body>
+</html>
